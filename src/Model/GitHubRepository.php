@@ -8,13 +8,14 @@
 
 namespace App\Model;
 
-use Github\Client;
+
 
 class GitHubRepository
 {
     protected $user;
     protected $repo;
     protected $branch = [];
+    protected $client;
 
 
     /**
@@ -23,24 +24,40 @@ class GitHubRepository
      * @param $repo
      * @param array $branch
      */
-    public function __construct($user, $repo, array $branch)
+    public function __construct($user, $repo, array $branch,$client)
     {
         $this->user = $user;
         $this->repo = $repo;
         $this->branch = $branch;
+        $this->client = $client;
     }
 
-    public function getCommits()
+    public function getCommits():array
     {
-        $client = new Client();
-
-        return $client->api('repo')->commits()->all(
+        return $this->client->api('repo')->commits()->all(
             $this->getUser(),
             $this->getRepo(),
             $this->getBranch()
         );
-
     }
+
+    /**
+     * @return mixed
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param mixed $client
+     */
+    public function setClient($client): void
+    {
+        $this->client = $client;
+    }
+
+
 
     /**
      * @return mixed
