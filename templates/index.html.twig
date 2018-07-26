@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for commit in commits %}
+        {{ commit['commit']['message'] }}<br>
+        {{ commit['commit']['author']['name'] }}<br>
+        {{ commit['sha'] }}<br>
+        <hr>
+    {% endfor %}
+  <p>Amoouns of commits </p> {{ commits|length }}
+{% endblock %}
